@@ -1,5 +1,3 @@
-# K-Nearest Neighbors (K-NN)
-
 # Importing the libraries
 import numpy as np
 import matplotlib.pyplot as plt
@@ -8,26 +6,26 @@ import pandas as pd
 # Importing the dataset
 def calcProbability(file_name, acc, vsvezes): 
 	dataset = pd.read_csv(file_name)
-	X = dataset.iloc[1:, 1:3].values
-	y = dataset.iloc[1:, 3].values
+	X = dataset.iloc[1:-1, 1:3].values
+	y = dataset.iloc[1:-1, 3].values
 
 	# Feature Scaling
-	from sklearn.preprocessing import StandardScaler
-	sc = StandardScaler()
-	X = sc.fit_transform(X)
+	#from sklearn.preprocessing import StandardScaler
+	#sc = StandardScaler()
+	#X = sc.fit_transform(X)
 	
-	
-	# Fitting K-NN to the Training set
-	from sklearn.neighbors import KNeighborsClassifier
-	classifier = KNeighborsClassifier(n_neighbors = 5, weights = 'distance', metric = 'minkowski', p = 2)
+	# Fitting Random Forest Classification to the Training set
+	from sklearn.ensemble import RandomForestClassifier
+	classifier = RandomForestClassifier(n_estimators = 10, criterion = 'entropy', random_state = 0)
 	classifier.fit(X, y)
 
-	# Predicting the Test set results
-	x_test = [[vsvezes,180]]
-	for i in range(200-181):
-		x_test = x_test + [[vsvezes,181+i]]
 
-	x_test = sc.transform(x_test)
+	# Predicting the Test set results
+	x_test = [[vsvezes,181]]
+	for i in range(195-182):
+		x_test = x_test + [[vsvezes,182+i]]
+
+	#x_test = sc.transform(x_test)
 	y_pred = classifier.predict(x_test)
 	
 	# Making the Confusion Matrix
@@ -87,4 +85,3 @@ for i in range(15):
 
 print ("Probability sum: " + str(valuesum))
 print (d_order)
-	

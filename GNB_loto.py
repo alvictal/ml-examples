@@ -1,5 +1,3 @@
-# K-Nearest Neighbors (K-NN)
-
 # Importing the libraries
 import numpy as np
 import matplotlib.pyplot as plt
@@ -8,24 +6,23 @@ import pandas as pd
 # Importing the dataset
 def calcProbability(file_name, acc, vsvezes): 
 	dataset = pd.read_csv(file_name)
-	X = dataset.iloc[1:, 1:3].values
-	y = dataset.iloc[1:, 3].values
+	X = dataset.iloc[1:-1, 1:3].values
+	y = dataset.iloc[1:-1, 3].values
 
 	# Feature Scaling
 	from sklearn.preprocessing import StandardScaler
 	sc = StandardScaler()
 	X = sc.fit_transform(X)
 	
-	
-	# Fitting K-NN to the Training set
-	from sklearn.neighbors import KNeighborsClassifier
-	classifier = KNeighborsClassifier(n_neighbors = 5, weights = 'distance', metric = 'minkowski', p = 2)
+	# Fitting SVM to the Training set
+	from sklearn.naive_bayes import GaussianNB
+	classifier = GaussianNB()
 	classifier.fit(X, y)
 
 	# Predicting the Test set results
-	x_test = [[vsvezes,180]]
-	for i in range(200-181):
-		x_test = x_test + [[vsvezes,181+i]]
+	x_test = [[vsvezes,145]]
+	for i in range(230-146):
+		x_test = x_test + [[vsvezes,146+i]]
 
 	x_test = sc.transform(x_test)
 	y_pred = classifier.predict(x_test)
@@ -44,31 +41,31 @@ def calcProbability(file_name, acc, vsvezes):
 
 
 
-pred = [[1],
-		[1],
+pred = [[0],
 		[0],
-		[1],
 		[0],
+		[0],
+		[0],
+		[2],
+		[0],
+		[0],
+		[2],
+		[0],
+		[0],
+		[0],
+		[0],
+		[2],
+		[0],
+		[0],
+		[2],
 		[0],
 		[0],
 		[1],
 		[3],
-		[0],
 		[1],
-		[0],
 		[1],
-		[0],
-		[0],
-		[1],
-		[0],
-		[0],
-		[1],
-		[0],
-		[4],
-		[0],
-		[0],
-		[0],
-		[0]]
+		[3],
+		[1]]
 
 
 d = dict()
@@ -87,4 +84,3 @@ for i in range(15):
 
 print ("Probability sum: " + str(valuesum))
 print (d_order)
-	
